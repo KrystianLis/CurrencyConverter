@@ -53,7 +53,7 @@ namespace CurrencyConverter
 
             var content = await response.Content.ReadAsStringAsync();
 
-            content = content.Substring(1, content.Length - 2);
+            content = content[1..^1];
 
             if (response.IsSuccessStatusCode)
             {

@@ -6,6 +6,9 @@ namespace CurrencyConverter
     [Serializable]
     internal class ResponeException : Exception
     {
+        public int StatusCpde { get; set; }
+        public string Content { get; set; }
+
         public ResponeException()
         {
         }
@@ -21,8 +24,5 @@ namespace CurrencyConverter
         protected ResponeException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
-
-        public int StatusCpde { get; set; }
-        public string Content { get; set; }
     }
 }
