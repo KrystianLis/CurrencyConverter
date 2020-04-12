@@ -37,7 +37,7 @@ namespace CurrencyConverter
             {
 
             }
-            catch(JsonException ex)
+            catch(JsonException)
             {
             }
             catch (Exception)
@@ -53,7 +53,7 @@ namespace CurrencyConverter
 
             var content = await response.Content.ReadAsStringAsync();
 
-            content = content.Substring( 1, content.Length - 2);
+            content = content.Substring(1, content.Length - 2);
 
             if (response.IsSuccessStatusCode)
             {
