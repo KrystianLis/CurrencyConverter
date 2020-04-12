@@ -8,6 +8,7 @@ namespace CurrencyConverter.Model
     {
         public string currency { get; set; }
         public string code { get; set; }
-        public double mid { get; set; }
+        public double bid { get; set; }
+        public double ask { get; set; }
     }
 }

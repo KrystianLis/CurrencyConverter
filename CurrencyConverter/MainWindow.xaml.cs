@@ -33,13 +33,12 @@ namespace CurrencyConverter
             {
                 var response = await GetFullRateAsync();
             }
-            catch (ResponeException ex)
+            catch (ResponeException)
             {
 
             }
             catch(JsonException ex)
             {
-
             }
             catch (Exception)
             {
@@ -47,45 +46,30 @@ namespace CurrencyConverter
             }
         }
 
-        private async Task<RootRate> GetFullRateAsync()
+        private async Task<RootObject> GetFullRateAsync()
         {
             using var client = new HttpClient();
-            using var request = new HttpRequestMessage(HttpMethod.Get, $"http://api.nbp.pl/api/exchangerates/tables/a/?format=json");
-            using var response = await client.SendAsync(request, new CancellationTokenSource(TimeSpan.FromSeconds(Timeout)).Token);
+            using var response = await client.GetAsync(@"http://api.nbp.pl/api/exchangerates/tables/c/?format=json", HttpCompletionOption.ResponseHeadersRead, new CancellationTokenSource(TimeSpan.FromSeconds(Timeout)).Token);
 
-            var contentStream = await response.Content.ReadAsStreamAsync();
+            var content = await response.Content.ReadAsStringAsync();
+
+            content = content.Substring( 1, content.Length - 2);
 
             if (response.IsSuccessStatusCode)
             {
-                return await JsonSerializer.DeserializeAsync<RootRate>(contentStream, new JsonSerializerOptions 
+                return JsonSerializer.Deserialize<RootObject>(content, new JsonSerializerOptions 
                 { 
                     IgnoreNullValues = true, 
                     PropertyNameCaseInsensitive = true 
                 });
             }
 
-            var content = await StreamToStringAsync(contentStream);
-
             throw new ResponeException
             {
                 StatusCpde = (int)response.StatusCode,
                 Content = content
             };
-        }
-
-        private static async Task<string> StreamToStringAsync(Stream stream)
-        {
-            string content = null;
-
-            if (stream != null)
-            {
-                using (var sr = new StreamReader(stream))
-                {
-                    content = await sr.ReadToEndAsync();
-                }
-            }
-
-            return content;
+       
         }
     }
 }

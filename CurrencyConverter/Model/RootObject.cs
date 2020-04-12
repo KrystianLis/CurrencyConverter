@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CurrencyConverter.Model
 {
-    public class RootRate
+    public class RootObject
     {
         public string table { get; set; }
         public string no { get; set; }
