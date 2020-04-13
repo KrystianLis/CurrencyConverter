@@ -6,7 +6,7 @@ namespace CurrencyConverter
     [Serializable]
     internal class ResponeException : Exception
     {
-        public int StatusCpde { get; set; }
+        public int StatusCode { get; set; }
         public string Content { get; set; }
 
         public ResponeException()

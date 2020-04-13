@@ -33,16 +33,17 @@ namespace CurrencyConverter
             {
                 var response = await GetFullRateAsync();
             }
-            catch (ResponeException)
+            catch (ResponeException ex)
             {
-
+                Notes.Text += $"Response exception!\nStatus code: {ex.StatusCode}\nContent: {ex.Content}\n";
             }
-            catch(JsonException)
+            catch(JsonException ex)
             {
+                Notes.Text += $"JSON exception: {ex.Message}";
             }
             catch (Exception)
             {
-
+                Notes.Text += "Undefined exception";
             }
         }
 
@@ -66,7 +67,7 @@ namespace CurrencyConverter
 
             throw new ResponeException
             {
-                StatusCpde = (int)response.StatusCode,
+                StatusCode = (int)response.StatusCode,
                 Content = content
             };
        

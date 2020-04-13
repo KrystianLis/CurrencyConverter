@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CurrencyConverter"
         mc:Ignorable="d"
         Title="Currency Converter" Height="450" Width="800">
-    
+
     <DockPanel>
         <Menu Height="20" DockPanel.Dock="Top">
             <MenuItem Header="_File">
@@ -27,16 +27,34 @@
                 </TextBlock>
             </StatusBarItem>
         </StatusBar>
+
         <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="89*"/>
-                <ColumnDefinition Width="701*"/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="60" />
+                <RowDefinition Height="40" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox Margin="10">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <GroupBox Padding="5" Grid.Row="2">
+                <GroupBox.Header>Rate Data</GroupBox.Header>
+                <DataGrid x:Name="Rates"></DataGrid>
+            </GroupBox>
+            <GroupBox Padding="5" Grid.Column="1" Grid.Row="2">
+                <GroupBox.Header>Notes</GroupBox.Header>
+                <TextBox x:Name="Notes" Padding="5" AcceptsReturn="True" TextWrapping="Wrap" />
+            </GroupBox>
+            <Button Content="Button" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="230"/>
         </Grid>
     </DockPanel>
 </Window>
