@@ -1,7 +1,6 @@
 ﻿using CurrencyConverter.Model;
 using System;
-using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
@@ -17,6 +16,8 @@ namespace CurrencyConverter
     {
         private const int Timeout = 10;
 
+        private RootObject rootObject;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -31,7 +32,8 @@ namespace CurrencyConverter
         {
             try
             {
-                var response = await GetFullRateAsync();
+                rootObject = await GetFullRateAsync();
+                RatesComboBox.ItemsSource = rootObject.Rates;
             }
             catch (ResponeException ex)
             {
@@ -39,11 +41,11 @@ namespace CurrencyConverter
             }
             catch(JsonException ex)
             {
-                Notes.Text += $"JSON exception: {ex.Message}";
+                Notes.Text += $"JSON exception: {ex.Message}\n";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Notes.Text += "Undefined exception";
+                Notes.Text += $"{ex.Message}\n";
             }
         }
 
@@ -71,6 +73,11 @@ namespace CurrencyConverter
                 Content = content
             };
        
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Rates.ItemsSource = rootObject.Rates;
         }
     }
 }
