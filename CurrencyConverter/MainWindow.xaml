@@ -37,6 +37,7 @@
                 <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
             <GroupBox Padding="5">
+                <GroupBox.Header>Convert</GroupBox.Header>
                 <UniformGrid Columns="2">
                     <UniformGrid Margin="5" Rows="2">
                         <TextBox>
