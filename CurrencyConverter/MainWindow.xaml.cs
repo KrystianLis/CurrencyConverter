@@ -34,6 +34,7 @@ namespace CurrencyConverter
             {
                 rootObject = await GetFullRateAsync();
                 RatesComboBox.ItemsSource = rootObject.Rates;
+                Rates.ItemsSource = rootObject.Rates;
             }
             catch (ResponeException ex)
             {
@@ -77,7 +78,9 @@ namespace CurrencyConverter
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Rates.ItemsSource = rootObject.Rates;
+
+            string ss = ((Rate)RatesComboBox.SelectedItem).Currency.ToString();
+
         }
     }
 }

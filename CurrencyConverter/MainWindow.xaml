@@ -27,34 +27,54 @@
                 </TextBlock>
             </StatusBarItem>
         </StatusBar>
-
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
+                <RowDefinition Height="150" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
-            <ComboBox Margin="10,10,10,5" x:Name="RatesComboBox">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Currency}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+            <GroupBox Padding="5">
+                <UniformGrid Columns="2">
+                    <UniformGrid Margin="5" Rows="2">
+                        <TextBox>
+
+                        </TextBox>
+                        <ComboBox>
+
+                        </ComboBox>
+                    </UniformGrid>
+                    <UniformGrid Margin="5" Rows="2">
+                        <TextBox>
+
+                        </TextBox>
+                        <ComboBox>
+
+                        </ComboBox>
+                    </UniformGrid>
+                    <ComboBox Margin="5" x:Name="RatesComboBox"  Grid.Column="0">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Currency}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Margin="5" Content="Check" Click="Button_Click"/>
+                </UniformGrid>
+            </GroupBox>
             <GroupBox Padding="5" Grid.Row="2">
                 <GroupBox.Header>Rate Data</GroupBox.Header>
-                <DataGrid x:Name="Rates"></DataGrid>
+                <DataGrid x:Name="Rates" Grid.Row="2"></DataGrid>
             </GroupBox>
             <GroupBox Padding="5" Grid.Column="1" Grid.Row="2">
                 <GroupBox.Header>Notes</GroupBox.Header>
                 <TextBox x:Name="Notes" Padding="5" AcceptsReturn="True" TextWrapping="Wrap" />
             </GroupBox>
-            <Button Content="Check" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="230" Click="Button_Click"/>
+            <TextBlock Grid.Column="2" FontWeight="Bold" TextWrapping="Wrap" FontSize="25" Text="Currency Converter" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
     </DockPanel>
 </Window>
