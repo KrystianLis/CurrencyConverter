@@ -31,10 +31,10 @@ namespace CurrencyConverter.Model
         public string Code { get; set; }
 
         [JsonPropertyName("bid")]
-        public double Bid { get; set; }
+        public double Buy { get; set; }
 
         [JsonPropertyName("ask")]
-        public double Ask { get; set; }
+        public double Sell { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

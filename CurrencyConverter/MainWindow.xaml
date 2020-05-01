@@ -12,7 +12,7 @@
             <MenuItem Header="_File">
                 <MenuItem x:Name="Close" Header="Close" Click="Close_OnClick"/>
             </MenuItem>
-            <MenuItem x:Name="LoadCurrency" Header="Load Currency" Click="LoadCurrency_Click"/>
+            <MenuItem x:Name="LoadCurrency" Header="Load all currency" Click="LoadCurrency_Click"/>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
@@ -22,8 +22,8 @@
                 <ProgressBar x:Name="StockProgress" Width="200" Height="15" Visibility="Hidden"></ProgressBar>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
-                <TextBlock Padding="5" FontFamily="Jokerman">
-                    By Krystian Lis - The future God of .NET
+                <TextBlock Padding="5" FontFamily="Rage Italic" FontSize="14">
+                    By Krystian Lis
                 </TextBlock>
             </StatusBarItem>
         </StatusBar>
@@ -43,16 +43,28 @@
                         <TextBox>
 
                         </TextBox>
-                        <ComboBox>
-
+                        <ComboBox x:Name="FirstRatesComboBox">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Currency}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
                     </UniformGrid>
                     <UniformGrid Margin="5" Rows="2">
                         <TextBox>
 
                         </TextBox>
-                        <ComboBox>
-
+                        <ComboBox x:Name="SecondRatesComboBox">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Currency}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
                     </UniformGrid>
                     <ComboBox Margin="5" x:Name="RatesComboBox"  Grid.Column="0">
@@ -69,7 +81,7 @@
             </GroupBox>
             <GroupBox Padding="5" Grid.Row="2">
                 <GroupBox.Header>Rate Data</GroupBox.Header>
-                <DataGrid x:Name="Rates" Grid.Row="2"></DataGrid>
+                <DataGrid x:Name="RatesGrid" Grid.Row="2"></DataGrid>
             </GroupBox>
             <GroupBox Padding="5" Grid.Column="1" Grid.Row="2">
                 <GroupBox.Header>Notes</GroupBox.Header>
