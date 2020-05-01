@@ -1,5 +1,6 @@
 ﻿using CurrencyConverter.Model;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
@@ -28,15 +29,23 @@ namespace CurrencyConverter
             Application.Current.Shutdown();
         }
 
-        private async void LoadCurrency_Click(object sender, RoutedEventArgs e)
+        private async void LoadData_Click(object sender, RoutedEventArgs e)
         {
+            #region Before loading rate data
+
+            var watch = new Stopwatch();
+            watch.Start();
+            RateProgress.Visibility = Visibility.Visible;
+            RateProgress.IsIndeterminate = true;
+
+            #endregion
+
             try
             {
                 rootObject = await GetFullRateAsync();
                 RatesComboBox.ItemsSource = rootObject.Rates;
                 FirstRatesComboBox.ItemsSource = rootObject.Rates;
                 SecondRatesComboBox.ItemsSource = rootObject.Rates;
-                RatesGrid.ItemsSource = rootObject.Rates;
 
             }
             catch (ResponeException ex)
@@ -51,6 +60,13 @@ namespace CurrencyConverter
             {
                 Notes.Text += $"{ex.Message}\n";
             }
+
+            #region After loading rate data
+
+            RatesStatus.Text = $"Loaded rates in {watch.ElapsedMilliseconds}ms";
+            RateProgress.Visibility = Visibility.Hidden;
+
+            #endregion
         }
 
         private async Task<RootObject> GetFullRateAsync()
@@ -82,6 +98,19 @@ namespace CurrencyConverter
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string ss = ((Rate)RatesComboBox.SelectedItem).Currency.ToString();
+        }
+
+        private void ShowCurrency_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                RatesGrid.ItemsSource = rootObject.Rates;
+            }
+            catch(Exception ex)
+            {
+                Notes.Text += $"{ex.Message} Load data!\n";
+            }
+
         }
     }
 }

@@ -12,14 +12,15 @@
             <MenuItem Header="_File">
                 <MenuItem x:Name="Close" Header="Close" Click="Close_OnClick"/>
             </MenuItem>
-            <MenuItem x:Name="LoadCurrency" Header="Load all currency" Click="LoadCurrency_Click"/>
+            <MenuItem x:Name="LoadCurrency" Header="Show all currency" Click="ShowCurrency_Click"/>
+            <MenuItem x:Name="LoadData" Header="Load data" Click="LoadData_Click"/>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
-                <TextBlock Padding="5" x:Name="StocksStatus">No data loaded</TextBlock>
+                <TextBlock Padding="5" x:Name="RatesStatus">No data loaded</TextBlock>
             </StatusBarItem>
             <StatusBarItem>
-                <ProgressBar x:Name="StockProgress" Width="200" Height="15" Visibility="Hidden"></ProgressBar>
+                <ProgressBar x:Name="RateProgress" Width="200" Height="15" Visibility="Hidden"></ProgressBar>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
                 <TextBlock Padding="5" FontFamily="Rage Italic" FontSize="14">
@@ -29,14 +30,16 @@
         </StatusBar>
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="150" />
+                <RowDefinition Height="130" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="91*"/>
+                <ColumnDefinition Width="77*"/>
+                <ColumnDefinition Width="372*"/>
                 <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Padding="5">
+            <GroupBox Padding="5" Grid.ColumnSpan="3">
                 <GroupBox.Header>Convert</GroupBox.Header>
                 <UniformGrid Columns="2">
                     <UniformGrid Margin="5" Rows="2">
@@ -67,7 +70,7 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </UniformGrid>
-                    <ComboBox Margin="5" x:Name="RatesComboBox"  Grid.Column="0">
+                    <ComboBox Height="25" Margin="5" x:Name="RatesComboBox"  Grid.Column="0">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -76,18 +79,18 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Button Margin="5" Content="Check" Click="Button_Click"/>
+                    <Button Height="25" Margin="5" Content="Check" Click="Button_Click"/>
                 </UniformGrid>
             </GroupBox>
-            <GroupBox Padding="5" Grid.Row="2">
+            <GroupBox Padding="5" Grid.Row="1" Grid.ColumnSpan="3">
                 <GroupBox.Header>Rate Data</GroupBox.Header>
                 <DataGrid x:Name="RatesGrid" Grid.Row="2"></DataGrid>
             </GroupBox>
-            <GroupBox Padding="5" Grid.Column="1" Grid.Row="2">
+            <GroupBox Padding="5" Grid.Column="3" Grid.Row="1">
                 <GroupBox.Header>Notes</GroupBox.Header>
                 <TextBox x:Name="Notes" Padding="5" AcceptsReturn="True" TextWrapping="Wrap" />
             </GroupBox>
-            <TextBlock Grid.Column="2" FontWeight="Bold" TextWrapping="Wrap" FontSize="25" Text="Currency Converter" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="3" FontWeight="Bold" TextWrapping="Wrap" FontSize="25" Text="Currency Converter" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
     </DockPanel>
 </Window>
