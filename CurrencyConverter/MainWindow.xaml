@@ -30,7 +30,7 @@
         </StatusBar>
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="130" />
+                <RowDefinition Height="135" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -43,9 +43,7 @@
                 <GroupBox.Header>Convert</GroupBox.Header>
                 <UniformGrid Columns="2">
                     <UniformGrid Margin="5" Rows="2">
-                        <TextBox>
-
-                        </TextBox>
+                        <TextBox x:Name="FirstValue"/>
                         <ComboBox x:Name="FirstRatesComboBox">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -57,9 +55,7 @@
                         </ComboBox>
                     </UniformGrid>
                     <UniformGrid Margin="5" Rows="2">
-                        <TextBox>
-
-                        </TextBox>
+                        <TextBox x:Name="SecondValue"/>
                         <ComboBox x:Name="SecondRatesComboBox">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -84,11 +80,16 @@
             </GroupBox>
             <GroupBox Padding="5" Grid.Row="1" Grid.ColumnSpan="3">
                 <GroupBox.Header>Rate Data</GroupBox.Header>
-                <DataGrid x:Name="RatesGrid" Grid.Row="2"></DataGrid>
+                <DataGrid x:Name="RatesGrid" Grid.Row="2" CanUserAddRows="false"></DataGrid>
             </GroupBox>
             <GroupBox Padding="5" Grid.Column="3" Grid.Row="1">
                 <GroupBox.Header>Notes</GroupBox.Header>
-                <TextBox x:Name="Notes" Padding="5" AcceptsReturn="True" TextWrapping="Wrap" />
+                <Grid>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <TextBox x:Name="Notes" Padding="5" AcceptsReturn="True" TextWrapping="Wrap" >
+                        </TextBox>
+                    </ScrollViewer>
+                </Grid>
             </GroupBox>
             <TextBlock Grid.Column="3" FontWeight="Bold" TextWrapping="Wrap" FontSize="25" Text="Currency Converter" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>

@@ -22,7 +22,6 @@ namespace CurrencyConverter.Model
             set
             {
                 _currency = value;
-
                 OnPropertyChanged();
             }
         }

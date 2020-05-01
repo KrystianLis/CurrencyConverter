@@ -19,6 +19,8 @@ namespace CurrencyConverter
 
         private RootObject rootObject;
 
+        private Task checkValuesTask;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -47,6 +49,8 @@ namespace CurrencyConverter
                 FirstRatesComboBox.ItemsSource = rootObject.Rates;
                 SecondRatesComboBox.ItemsSource = rootObject.Rates;
 
+                this.checkValuesTask = Task.Factory.StartNew(this.CheckValues, TaskCreationOptions.LongRunning);
+
             }
             catch (ResponeException ex)
             {
@@ -69,10 +73,28 @@ namespace CurrencyConverter
             #endregion
         }
 
+        private void CheckValues()
+        {
+            while(true)
+            {
+                if (FirstRatesComboBox.SelectedIndex > -1)
+                {
+
+                }
+                else if(SecondRatesComboBox.SelectedIndex > -1)
+                {
+
+                }
+
+                Thread.Yield();
+            }
+        }
+
         private async Task<RootObject> GetFullRateAsync()
         {
             using var client = new HttpClient();
-            using var response = await client.GetAsync(@"http://api.nbp.pl/api/exchangerates/tables/c/?format=json", HttpCompletionOption.ResponseHeadersRead, new CancellationTokenSource(TimeSpan.FromSeconds(Timeout)).Token);
+            using var response = await client.GetAsync(@"http://api.nbp.pl/api/exchangerates/tables/c/?format=json", 
+                HttpCompletionOption.ResponseHeadersRead, new CancellationTokenSource(TimeSpan.FromSeconds(Timeout)).Token);
 
             var content = await response.Content.ReadAsStringAsync();
 
@@ -92,12 +114,19 @@ namespace CurrencyConverter
                 StatusCode = (int)response.StatusCode,
                 Content = content
             };
-       
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string ss = ((Rate)RatesComboBox.SelectedItem).Currency.ToString();
+            try
+            {
+                string tempString = ((Rate)RatesComboBox.SelectedItem).Currency.ToString();
+                RatesGrid.ItemsSource = rootObject.Rates.FindAll(s => s.Currency == tempString);
+            }
+            catch(NullReferenceException ex)
+            {
+                Notes.Text += $"{ex.Message} Select currency!\n";
+            }
         }
 
         private void ShowCurrency_Click(object sender, RoutedEventArgs e)
@@ -106,11 +135,10 @@ namespace CurrencyConverter
             {
                 RatesGrid.ItemsSource = rootObject.Rates;
             }
-            catch(Exception ex)
+            catch(NullReferenceException ex)
             {
                 Notes.Text += $"{ex.Message} Load data!\n";
             }
-
         }
     }
 }
