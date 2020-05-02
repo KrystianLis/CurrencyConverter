@@ -13,7 +13,7 @@
                 <MenuItem x:Name="Close" Header="Close" Click="Close_OnClick"/>
             </MenuItem>
             <MenuItem x:Name="LoadData" Header="Load data" Click="LoadData_Click"/>
-            <MenuItem x:Name="LoadCurrency" Header="Show all currency" Click="ShowCurrency_Click"/>
+            <MenuItem x:Name="LoadCurrency" Header="Show all currencies" Click="ShowCurrency_Click"/>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
@@ -43,7 +43,7 @@
                 <GroupBox.Header>Convert</GroupBox.Header>
                 <UniformGrid Columns="2">
                     <UniformGrid Margin="5" Rows="2">
-                        <TextBox x:Name="FirstValueTextBox"/>
+                        <TextBox x:Name="FirstValueTextBox" PreviewTextInput="FirstValueTextBox_NumberValidationTextBox" DataObject.Pasting="FirstValueTextBox_Pasting"/>
                         <ComboBox x:Name="TypeComboBox">
                             <ComboBoxItem Content="Purchase"/>
                             <ComboBoxItem Content="Sale"/>

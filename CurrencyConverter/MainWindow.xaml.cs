@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace CurrencyConverter
 {
@@ -15,6 +17,8 @@ namespace CurrencyConverter
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static readonly Regex _regex = new Regex("[^0-9]+");
+
         private const int Timeout = 10;
 
         private RootObject rootObject;
@@ -150,6 +154,32 @@ namespace CurrencyConverter
             catch(NullReferenceException ex)
             {
                 Notes.Text += $"{ex.Message} Load data!\n";
+            }
+        }
+
+        private void FirstValueTextBox_NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsTextAllowed(e.Text);
+        }
+
+        private static bool IsTextAllowed(string text)
+        {
+            return _regex.IsMatch(text);
+        }
+
+        private void FirstValueTextBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(string)))
+            {
+                string text = (string)e.DataObject.GetData(typeof(string));
+                if (!IsTextAllowed(text))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
             }
         }
     }
