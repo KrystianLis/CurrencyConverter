@@ -46,7 +46,6 @@ namespace CurrencyConverter
             {
                 rootObject = await GetFullRateAsync();
                 RatesComboBox.ItemsSource = rootObject.Rates;
-                FirstRatesComboBox.ItemsSource = rootObject.Rates;
                 SecondRatesComboBox.ItemsSource = rootObject.Rates;
 
                 this.checkValuesTask = Task.Factory.StartNew(this.CheckValues, TaskCreationOptions.LongRunning);
@@ -77,18 +76,31 @@ namespace CurrencyConverter
         {
             while(true)
             {
-                if (FirstRatesComboBox.SelectedIndex > -1)
+                Dispatcher.Invoke(() =>
                 {
+                    if (TypeComboBox.SelectedIndex > -1 && SecondRatesComboBox.SelectedIndex > -1 && FirstValueTextBox.Text != string.Empty)
+                    {
+                        var selectedAction = TypeComboBox.SelectedIndex;
+                        var toCurrency = ((Rate)SecondRatesComboBox.SelectedItem).Currency;
 
-                }
-                else if(SecondRatesComboBox.SelectedIndex > -1)
-                {
+                        var rate = this.rootObject.Rates.First(x => x.Currency.Equals(toCurrency));
+                        var times = ChooseAction(selectedAction, rate);
 
-                }
+                        SecondValueTextBox.Text = Convert.ToString(Convert.ToInt32(FirstValueTextBox.Text) * times);
+                    }
+                });
 
                 Thread.Yield();
             }
         }
+
+        private static double ChooseAction(int selectedAction, Rate rate) =>
+            (SelectedType)selectedAction switch
+            {
+                SelectedType.Sale => rate.Sale,
+                SelectedType.Purchase =>  rate.Purchase,
+                _ => throw new NotImplementedException()
+            };
 
         private async Task<RootObject> GetFullRateAsync()
         {

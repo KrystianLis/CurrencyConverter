@@ -12,8 +12,8 @@
             <MenuItem Header="_File">
                 <MenuItem x:Name="Close" Header="Close" Click="Close_OnClick"/>
             </MenuItem>
-            <MenuItem x:Name="LoadCurrency" Header="Show all currency" Click="ShowCurrency_Click"/>
             <MenuItem x:Name="LoadData" Header="Load data" Click="LoadData_Click"/>
+            <MenuItem x:Name="LoadCurrency" Header="Show all currency" Click="ShowCurrency_Click"/>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
@@ -30,7 +30,7 @@
         </StatusBar>
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="135" />
+                <RowDefinition Height="150" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -43,19 +43,14 @@
                 <GroupBox.Header>Convert</GroupBox.Header>
                 <UniformGrid Columns="2">
                     <UniformGrid Margin="5" Rows="2">
-                        <TextBox x:Name="FirstValue"/>
-                        <ComboBox x:Name="FirstRatesComboBox">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Currency}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
+                        <TextBox x:Name="FirstValueTextBox"/>
+                        <ComboBox x:Name="TypeComboBox">
+                            <ComboBoxItem Content="Purchase"/>
+                            <ComboBoxItem Content="Sale"/>
                         </ComboBox>
                     </UniformGrid>
                     <UniformGrid Margin="5" Rows="2">
-                        <TextBox x:Name="SecondValue"/>
+                        <TextBox x:Name="SecondValueTextBox"/>
                         <ComboBox x:Name="SecondRatesComboBox">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
