@@ -80,21 +80,28 @@ namespace CurrencyConverter
         {
             while(true)
             {
-                Dispatcher.Invoke(() =>
+                try
                 {
-                    if (TypeComboBox.SelectedIndex > -1 && SecondRatesComboBox.SelectedIndex > -1 && FirstValueTextBox.Text != string.Empty)
+                    Dispatcher.Invoke(() =>
                     {
-                        var selectedAction = TypeComboBox.SelectedIndex;
-                        var toCurrency = ((Rate)SecondRatesComboBox.SelectedItem).Currency;
+                        if (TypeComboBox.SelectedIndex > -1 && SecondRatesComboBox.SelectedIndex > -1 && FirstValueTextBox.Text != string.Empty)
+                        {
+                            var selectedAction = TypeComboBox.SelectedIndex;
+                            var toCurrency = ((Rate)SecondRatesComboBox.SelectedItem).Currency;
 
-                        var rate = this.rootObject.Rates.First(x => x.Currency.Equals(toCurrency));
-                        var times = ChooseAction(selectedAction, rate);
+                            var rate = this.rootObject.Rates.First(x => x.Currency.Equals(toCurrency));
+                            var times = ChooseAction(selectedAction, rate);
 
-                        SecondValueTextBox.Text = Convert.ToString(Convert.ToInt32(FirstValueTextBox.Text) * times);
-                    }
-                });
+                            SecondValueTextBox.Text = (Convert.ToInt64(FirstValueTextBox.Text) * times).ToString("F");
+                        }
+                    });
 
-                Thread.Yield();
+                    Thread.Yield();
+                }
+                catch(Exception ex)
+                {
+                    Notes.Text += $"{ex.Message}!\n";
+                }
             }
         }
 
